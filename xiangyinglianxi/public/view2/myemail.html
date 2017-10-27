@@ -1,0 +1,17 @@
+<div class="myhome_fanhui clearfix"><div><span ng-click="myhome_caidan()">返回</span></div></div>
+<div class="myhome_email_nav">
+	<ul>
+		<li ng-click="myhome_email=1">我的私信</li>
+		<li ng-click="myhome_email=2">系统信息</li>
+	</ul>
+</div>
+<div ng-switch="myhome_email">
+	<div ng-switch-when="1">
+		<h4>我的标题</h4>
+		<div><p>内容</p></div>
+	</div>	
+	<div ng-switch-when="2">
+		<h4>系统标题</h4>
+		<div><p>内容</p></div>
+	</div>
+</div>

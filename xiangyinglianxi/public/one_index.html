@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>Animated Background Headers | Demo 2</title>
+
+<link rel="stylesheet" type="text/css" href="css/one_beijing/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/one_beijing/demo.css" />
+<link rel="stylesheet" type="text/css" href="font_one/iconfont.css">
+<link rel="stylesheet" type="text/css" href="css/ball-spin-clockwise.css">
+
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="css/one_beijing/component.css" />
+
+<script src='/angular/angular.js'></script>
+<script src="/angular-ui-router/release/angular-ui-router.js " ></script>
+<script>
+var app = angular.module('myapp',['ui.router'])
+app.run(function ($rootScope) {
+	$rootScope.dl_loading = true;
+	$rootScope.yidenglu=false;
+	$rootScope.yidenglu1=false;
+	if (angular.fromJson(localStorage.xqz) && new Date(angular.fromJson(localStorage.xqz).time) > new Date()) {$rootScope.yidenglu = true;window.location="http://127.0.0.1/index"}
+	else{$rootScope.yidenglu1=true;$rootScope.dl_loading = false;}
+})
+app.factory('dl_post',function ($http) {
+	return function (a,b,callback) {
+		$http.post(a,b).then(function (response) {
+			callback(response.data)
+		})
+	}
+})
+app.controller('denglu',function ($rootScope,$scope,$http,$state,dl_post) {
+	$scope.no_write = false;
+	$scope.to = false;
+	$scope.user = true;
+	$scope.mima = true;
+	$scope.go = [];
+	$scope.to_dl_post = function (a) {
+		dl_post(a,{"name":$scope.go[0],"pwd":$scope.go[1]},function (callback) {
+			$rootScope.dl_loading = false;
+			console.log(callback)
+			if (callback=='1') {
+				window.location="http://yiujob.viphk.ngrok.org/index";
+				var x = new Date(); //实例化一个日期
+				// console.log(new Date(x.getTime())) 毫秒数转时间
+				// console.log(x.setDate(x.getDate()+5)) 当前时间加5天
+				// localStorage.removeItem('xqz');
+				// localStorage.xqz = angular.toJson({"time":new Date(x.setDate(x.getDate()+5)),"name":"admin"});
+				console.log(localStorage.xqz)
+				if (angular.fromJson(localStorage.xqz) && new Date(angular.fromJson(localStorage.xqz).time) > x) {window.location="http://127.0.0.1/index"}
+				// window.location="http://127.0.0.1/index"
+			}
+			if(callback=='-1'){alert('用户名不存在')}
+			if(callback=='-2'){alert('密码错误')}
+		})
+	}
+})
+</script>
+
+<!--[if IE]>
+	<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body ng-app="myapp" ng-controller="denglu">
+<!-- loading图像 -->
+<div class="dl_box" style="z-index: 1000;" ng-if='dl_loading' ng-cloak><!-- ng-cloak必须加，否则会闪烁 -->
+	<div style="margin-top: -50%;">
+        <div style="color: #FEFEFD" class="la-ball-spin-clockwise la-2x">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+	</div>
+</div>
+<!-- 已保留登录时显示的提示框 -->
+<div ng-show='yidenglu' ng-cloak>
+	<h5 style="color:red;">正在进入.....</h5>
+</div>
+<!-- 登录框部分 -->
+<div class="dl_box" ng-show='yidenglu1' ng-cloak>
+	<div class="dl_w_box">
+		<div class="user" style="margin-bottom: 10%;">
+			<i class="iconfont icon-yonghu1 fl"></i>
+			<span ng-class="{true:'opacity_input',false:'span_style'}[user]"><input type="text" ng-class="{true:'opacity_input'}[user]" ng-focus="user=false" ng-blur="user=true" ng-model="go[0]" ng-disabled="to"></span>
+		</div>
+		<div class="user_p">
+			<i class="iconfont icon-mima01 fl"></i>
+			<span ng-class="{true:'opacity_input',false:'span_style'}[mima]"><input type="password" ng-class="{true:'opacity_input'}[mima]" ng-focus="mima=false" ng-blur="mima=true" ng-model="go[1]" ng-disabled="to"></span>
+		</div>
+	</div>
+	<div class="anniu_box" ng-cloak><!-- ng-cloak必须加，否则会闪烁 -->
+		<button ng-show="go[0] && go[1]" ng-click="dl_loading=true;no_write=true;to=true;to_dl_post('/dl_post')" ng-disabled="to">进入</button>
+	</div>
+</div>
+<div class="container demo-2">
+	<div class="content">
+		<div id="large-header" class="large-header">
+			<canvas id="demo-canvas"></canvas>
+		</div>
+	</div>
+</div><!-- /container -->
+<script src="js/one_beijing/rAF.js"></script>
+<script src="js/one_beijing/demo-2.js"></script>
+</body>
+</html>

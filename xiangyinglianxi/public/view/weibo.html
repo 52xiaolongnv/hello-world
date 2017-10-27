@@ -1,0 +1,20 @@
+<div>
+    <a class="nav-a" href="">迷你围脖</a>
+    <div style="border: 1px solid #F3F1F1;margin:7.5px 0;"></div>
+    <div id="chat" style="height:210px;border-bottom:1px solid #F3F1F1">
+        <ul>
+            <li ng-repeat='x in weibo track by $index'>
+                <a href=""><img src="img/picture/1.jpg" style="width:43px;height:38px;border-radius: 25%;float:left;padding-right:4px;"></a>
+                <dl>
+                    <dt><span>{{x.name}}</span>&nbsp/&nbsp<span>赞</span></dt>
+                    <dt style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{x.neirong}}</dt>
+                </dl>
+            </li>            
+        </ul>
+    </div>
+    <div style="margin-top: 5px;">
+        <textarea rows="2" cols="32" style="float: left;resize:none" ng-model='neirong'></textarea>
+        <!-- ng-keypress="broadcast($event)"回车发送 -->
+        <button class="btn btn-primary" ng-click="fabu(neirong);neirong=''">发布</button>
+    </div>
+</div>

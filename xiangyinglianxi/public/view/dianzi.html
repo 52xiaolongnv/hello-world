@@ -1,0 +1,11 @@
+<div ui-view>
+<a ui-sref='index.rizhi.dianzi({page:2})'>电子产品</a>
+<table class="table table-hover">
+    <tr ng-repeat='x in biaoti track by $index'>
+        <!-- <th><a ui-sref='.comment2({name:"dianzi",title:x.title,text:x.text})' style="font-size: 1.2vw;">{{x.title}}</a></th> -->
+        <!-- <th><a href="javascript:void(0);" style="font-size: 1.2vw;" ng-click='ara(x.title,x.text,$index)'>{{x.title}}</a></th> -->
+        <th><a ui-sref='.comment2({id:$index})' style="font-size: 1.2vw;">{{x.title}}</a></th>
+    </tr>
+</table>
+</div>
+

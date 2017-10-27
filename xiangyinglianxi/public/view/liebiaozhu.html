@@ -1,0 +1,20 @@
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tc10" ng-click='what=1'>热门话题</a></li>
+    <li><a data-toggle="tab" href="#tc20" ng-click='what=2'>最新动态</a></li>
+</ul>
+<table class="table table-hover" ng-if="what==1">
+    <tr ng-repeat='x in remen track by $index'>
+        <td style="width:1vw;padding-right: 0;"><a ui-sref="index.renmen({bti:x.biaoti,neirong:x.neirong})"><img src="img/hot.gif"></a></td>
+        <th><a ui-sref="index.renmen({bti:x.biaoti,neirong:x.neirong})" style="font-size: 1.2vw;">{{x.biaoti}}</a></th>
+        <td>{{x.faburen}}</td>
+        <td><span>{{x.time}}</span></td>
+    </tr>                     
+</table>
+<table class="table table-hover" ng-if="what==2">
+    <tr ng-repeat='x in zuixindongtai track by $index'>
+        <td style="width:1vw;padding-right: 0;"><a ui-sref="index.zuixindongtai({bti:x.biaoti,neirong:x.neirong})"><img src="img/new2.gif"></a></td>
+        <th><a ui-sref="index.zuixindongtai({bti:x.biaoti,neirong:x.neirong})" style="font-size: 1.2vw;">{{x.biaoti}}</a></th>
+        <td>{{x.faburen}}</td>
+        <td><span>{{x.time}}</span></td>
+    </tr>               
+</table>

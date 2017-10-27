@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app' ng-controller='xy'>
+<head>
+	<meta charset="UTF-8">
+	<title>响应式练习</title>
+	
+<!-- 	device-width --><!-- 不定宽 -->
+	<!-- <meta name="viewpotr" id="viewpotr" content="width=device-width,initial-scalable=1"> -->
+	<meta name="viewpotr" id="viewpotr" content="width=640">
+	<!-- <script src="/js/mobile-util.js"></script> -->
+	<script>
+		(function setSize() {
+			var _html = document.getElementsByTagName('html')[0];
+			var ch = document.documentElement.clientWidth;
+			ch>640?_html.style.fontSize = '40px':_html.style.fontSize = ch / 16 + 'px';	
+			window.onresize = setSize;
+		})();
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="font_one/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="css/m_indexcss.css">
+	<link rel="stylesheet" type="text/css" href="css/ball-spin-clockwise.css">
+	<script src='/angular/angular.js'></script>
+	<script src='/angular-animate/angular-animate.js'></script>
+	<script src="/angular-ui-router/release/angular-ui-router.js " ></script>
+	<script src="/js/m_index.js"></script>
+	<script src="/ng-file-upload/dist/ng-file-upload-shim.min.js" ></script>
+   	<script src="/ng-file-upload/dist/ng-file-upload.min.js" ></script>
+</head>
+<body ui-view ng-cloak>
+	<!-- loading图像 -->
+	<div class="loading_box iconfont icon-ok_2" style="color: #0BF644;font-size: 80px;" ng-if="loading2"></div>
+	<div class="loading_box" ng-if="loading3">发表失败</div>
+	<div class="loading_box iconfont icon-ok_2" style="color: #0BF644;z-index: 99999;font-size: 80px;" ng-if="loading4"></div>
+	<div class="loading_box" style="color: #0BF644;z-index: 99999;font-size: 50px;" ng-if="loading5">添加失败</div>
+	<div class="loading_zhezhao" ng-if="loading1"></div>
+	<div class="loading_box" ng-if="loading">
+        <div style="color: #edb948" class="la-ball-spin-clockwise la-2x">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+	</div>
+	<!-- 添加朋友框 -->
+	<div class="loading_box" ng-show="tianjia">
+		<div style="border:1px solid black;background-color: #939090;color: black;padding: 100px;">
+			<span>
+				<input type="text" placeholder="请输入手机号" style="font-size:30px;height: 50px;padding: 0 10px;">
+				<button style="padding: 5px;font-size: 20px;" ng-click="tjshouji()">添加</button>
+				<button style="padding: 5px;font-size: 20px;" ng-click="caidan_tianjia()">返回</button>
+			</span>
+		</div>
+	</div>
+
+	<!-- 发表成功 -->
+<!-- 	<div class="fbcg_box">
+		<div class="fbcg">
+			<h3>发表成功</h3>
+		</div>
+	</div> -->
+<!-- ------------------------------------------------------------------------------------------------------------------ -->
+	<div class="box" ui-view="new_neirong">
+		<!-- 上面原有，不知何意，无BUG就可以删除掉:ng-show='dlok' -->
+		<!-- <div ng-class="{true:'page2',false:'page'}[caiDan]"> -->
+		<div class="{{ceshi}}">
+			<header class="clearfix">
+				<a href="javascript:;" class="menu fl iconfont icon-caidan" ng-click="index_caidan()"></a>
+				<span class="header_item"><a href="javascript:void(null)" ng-class="{true:'active'}[className]" ng-click='chakan_fabu()'>查看</a><a href="javascript:void(null)" ng-class="{false:'active'}[className]" ng-click='chakan_fabu()'>发布</a></span>		
+				<a href="javascript:;" class="add fr iconfont icon-remen" ng-click="hot_button()"></a>	
+			</header>
+			<div class="item">
+				<div class="item_hd">
+					<div class="item_tit clearfix">
+						<div class="user_img">
+							<img src="img/1.jpg">
+						</div>
+						<h5>MARTIN GROOVE</h5>
+						<span class="iconfont icon-dianzan1 shoucan">175</span>	
+					</div>
+					<p class="inof_text">i can basejump from the shard! can you?</p>
+				</div>
+				<div class="item_bd">
+					<div class="ibd_img">
+						<img src="img/10.jpg">
+						<div class="ibd_time"><i></i><span>01:11:03</span></div>
+					</div>
+					<div class="btns clearfix" ng-hide="fabiao">
+						<span class="people fl iconfont icon-yonghu"> 资料</span>
+						<span class="share fr iconfont icon-fenxiang"> 评论</span>
+						<a  href="javascript:;" class="btn_mao iconfont icon-mao" ng-click="shuoshuo();"> 说两句</a>
+					</div>
+					<!-- 评论框 -->
+					<div class="pl_box" ng-show="fabiao">
+						<div>
+							<textarea rows="5" cols="35" style="resize:none;font-size: 30px;border:1px solid black;"></textarea>
+							<button style="padding: 10px;float: right;margin:0 10px;font-size: 23px;" ng-click="fb()">发表</button>
+							<button style="padding: 10px;float: right;font-size: 23px;" ng-click="shuoshuo()">取消</button>
+						</div>
+					</div>	
+				</div>	
+			</div>
+		</div>
+		<!-- 发布框 -->
+		<div ng-class="{true:'fb_kuang',false:'fb_kuang fb_yc'}[className]">
+			<div class="fb_bt clearfix">
+				<span></span><input type="text" placeholder="请输入标题">
+			</div>
+			<div class="fb_photo clearfix" style="padding: 5px;height: 80px;">
+				<div style="float: left;" ng-repeat='x in yulanimg track by $index'>
+					<ul>
+						<li style="display: inline-block;">
+							<img ng-src="{{x}}" style="width: 80px;height: 80px;">
+							<i class="iconfont icon-shanchu" style="position: absolute;"></i>
+						</li>
+					</ul>
+				</div>
+
+				<div class="myupload_box">
+					<form class="myupload">
+						<input type="file" ngf-select="onloadFiles($file)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+					</form>
+				</div>
+				<div class="tj_photo"><i class="iconfont icon-tianjiatupian2"></i></div>
+			</div>
+			<div style="text-align: center;margin-top: 30px;">
+				<textarea rows="8" cols="38" style="resize:none;font-size: 30px;border:1px solid black;"></textarea>
+			</div>
+		</div>
+		<div ng-class="{true:'fb_button',false:'fb_button button_yc'}[className]">
+			<button ng-click="chakan_fabu()">取消</button>
+			<button ng-click="myfabu()">发布</button>
+		</div>
+		<!-- 遮罩 -->
+		<div ng-class="{true:'mask yc',false:'mask'}[caiDan]" ng-click="zhezhao_caidan()"></div>
+		<!-- 左侧栏 -->
+		<div ng-class="{true:'leftnav leftnavyc',false:'leftnav'}[caiDan]">
+			<div class="myuser">
+				<div class="myuser_box">
+					<div class="myuser_img">
+						<img src="img/1.jpg">
+					</div>
+				</div>
+				<h5>Olia Gozha</h5>
+				<div class="renqizhi"><span>人气值: 116 </span><i class="iconfont icon-star-red"></i></div>
+			</div>		
+<!-- 			<a href="javascript:;" ng-class="{true:'menu fl iconfont icon-caidan yc',false:'menu fl iconfont icon-caidan'}[caiDan]" ng-click="caiDan=true"></a> -->
+			<div class="tianjia">
+				<button class="tj_box" ng-click="caidan_tianjia()">
+					<span class="iconfont icon-tianjia"> 添加朋友</span>
+				</button>	
+			</div>	
+			<div class="cedaohang">
+				<ul>
+					<li><a ui-sref="index.myemail" class="iconfont icon-xinxi"> 站内信息</a></li>
+					<li><a ui-sref="index.myhome" class="iconfont icon-yonghu"> 我的资料</a></li>
+				</ul>
+			</div>
+		</div>
+		<div ng-class="{true:'hot  hot_show',false:'hot'}[hot]">
+			<div class="go_top" ng-if="false"><span>返回顶部</span></div><!-- 根据滚动条的位置显示 -->
+			<span class="iconfont icon-fanhui" ng-click="hot_fanhui()"></span>
+			<div class="new_box">
+				<div class="new_logo">
+					<span>小圈子</span>
+					<span>大新闻</span>
+				</div>
+				<div class="new_nav">
+					<nav>
+						<a href="javascript:;" ng-click='what_new=1'>国内</a><!-- 建议ngclick使用函数 -->
+						<a href="javascript:;" ng-click='what_new=2'>国际</a>
+						<a href="javascript:;" ng-click='what_new=3'>搞笑</a>
+						<a href="javascript:;" ng-click='what_new=4'>小说</a>
+						<a href="javascript:;" ng-click='what_new=5'>更多</a>
+					</nav>
+				</div>
+				<div class="new_photo">
+					<img src="img/1.png">
+				</div>	
+			</div>
+			<div class="new_conten" ng-switch="what_new">
+					<div class="new_bag_box" ng-switch-when='1'>
+						<div class="new_c_box">
+							<div  class="new_bt"><a ui-sref='index.neirong({bank:what_new,btnum:1})'>江苏7名小学生被偷？江苏7名小学生江苏7名小学生</a></div>
+							<div class="new_pl"><i></i><a href="javascript:;" class="iconfont icon-pinglun"></a></div>	
+						</div>
+					</div>
+					<div class="new_bag_box" ng-switch-when='2'>
+						<div class="new_c_box">
+							<div  class="new_bt"><a ui-sref='index.neirong({bank:what_new,btnum:1})'>靠靠靠靠靠就解放家具iie額反反復複vvvv</a></div>
+							<div class="new_pl"><i></i><a href="javascript:;" class="iconfont icon-pinglun"></a></div>	
+						</div>
+					</div>					
+					<div class="new_bag_box" ng-switch-when='3'>
+						<div class="new_c_box">
+							<div  class="new_bt"><a ui-sref='index.neirong({bank:what_new,btnum:1})'>哈哈哈哈哈哈噩噩噩噩噩噩噩噩哦</a></div>
+							<div class="new_pl"><i></i><a href="javascript:;" class="iconfont icon-pinglun"></a></div>	
+						</div>
+					</div>					
+					<div class="new_bag_box" ng-switch-when='4'>
+						<div class="new_c_box">
+							<div  class="new_bt"><a ui-sref='index.neirong({bank:what_new,btnum:1})'>wwe朝鲜vcxvxcsdfsdfbvb沃尔沃恶毒的</a></div>
+							<div class="new_pl"><i></i><a href="javascript:;" class="iconfont icon-pinglun"></a></div>	
+						</div>
+					</div>					
+			</div>		
+		</div>
+	</div>	
+
+</body>
+</html>

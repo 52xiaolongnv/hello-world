@@ -1,0 +1,28 @@
+<div class="myhome_fanhui clearfix"><div><span ng-click="myhome_caidan()">返回</span></div></div>
+<div class="myhome_tou clearfix">
+	<div class="myhome_toup fl"><img src="img/1.jpg"></div>
+	<div class="p_button fl">
+		<button   type="file" ng-click="uploadFiles($file, $invalidFiles,myname)" accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+			点击上传
+      	</button>
+	</div>
+	<div class="nicheng fl"><input type="text" placeholder="请输入昵称"></div>
+</div>
+<div class="fb_pl">
+	<ul>
+		<li><a href="javascript:;" ng-click='what_fb_pl=1'>已发布</a></li>
+		<li><a href="javascript:;" ng-click='what_fb_pl=2'>已评论</a></li>
+	</ul>
+</div>
+<div ng-switch="what_fb_pl">
+	<div ng-switch-when='1'>
+		<ul>
+			<li>标题</li>
+		</ul>
+	</div>
+	<div ng-switch-when='2'>
+		<ul>
+			<li>评论</li>
+		</ul>
+	</div>
+</div>

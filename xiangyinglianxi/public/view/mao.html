@@ -1,0 +1,28 @@
+<div ui-view>
+<div class="col-md-2 visible-md visible-lg"></div>
+<div class="col-xs-12 col-sm-12 col-md-8" ng-init='take=1'>
+	<div class="col-xs-3 col-sm-2" style="border-right: 1px solid #F3F2F2;margin-top: 5px;">
+		<h4 style="font-size: 3vw;color:#56D8EF">闲·趣</h4>
+		<ul style="line-height: 25px;">
+			<li><a ui-sref='index.luntan.mao'>喵星人</a></li>
+			<li><a ui-sref='index.luntan.luoli'>萝莉</a></li>
+			<li><a ui-sref='index.luntan.neihan'>内涵</a></li>
+		</ul>
+	</div>
+	<div class="col-xs-9 col-sm-10">
+		<table class="table table-hover">
+		    <tr ng-repeat='x in mao track by $index'>
+		        <th><a ui-sref='.comment({name:"mao",id:$index})' style="font-size: 1.2vw;">{{x.CatTitle}}</a></th>
+		    </tr>
+		</table>
+	</div>
+
+</div>
+<div class="col-md-2 visible-md visible-lg"></div>
+ <div class="col-xs-12">
+	<tm-pagination conf="paginationConf"></tm-pagination>
+ </div>
+</div>
+
+
+

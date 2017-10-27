@@ -1,0 +1,14 @@
+<div style="margin-top: 13px;"><b>活跃人士</b></div>
+        <div style="border:1px solid #F3F1F1;margin:7.5px 0;"></div>
+        <div>
+            <ul>
+                <li ng-repeat='x in huoyue track by $index'>
+                    <a href=""><img ng-src="{{x.img}}" style="width:43px;height:38px;border-radius: 25%;float:left;padding-right:4px;"></a>
+                    <dl>
+                        <dt><span>{{x.name}}</span></dt>
+                        <dt style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;">{{x.qianming}}</dt>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    
